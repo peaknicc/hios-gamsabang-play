@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0f17">
+  <!-- 실제 친구들이 나오는 게임이라 검색에 안 뜨게 (주소 아는 사람만) -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>히오스감사방</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div id="app">
+    <section id="title" class="screen">
+      <div id="title-art" role="img" aria-label="유빈이 그린 히오스감사방 그림" style="-webkit-mask-image: url(img/title_art.png); mask-image: url(img/title_art.png);"></div>
+      <h1>히오스감사방</h1>
+      <nav id="title-menu" class="win list">
+        <button id="btn-continue">이어하기</button>
+        <button id="btn-new">새로 시작</button>
+        <button id="btn-load">불러오기</button>
+        <button id="btn-vs">뱀서 시험판</button>
+        <button id="btn-records">기록</button>
+        <button id="btn-test">시험 모드</button>
+        <button id="btn-settings">환경설정</button>
+      </nav>
+      <small id="version"></small>
+    </section>
+
+    <section id="slots" class="screen page">
+      <h2 id="slots-title"></h2>
+      <p id="slots-hint"></p>
+      <div id="slot-list"></div>
+      <button id="slots-back">돌아가기</button>
+    </section>
+
+    <section id="records" class="screen page">
+      <h2>기록</h2>
+      <div id="records-tabs"></div>
+      <div id="records-list"></div>
+      <button id="records-back">돌아가기</button>
+    </section>
+
+    <section id="testmode" class="screen page">
+      <h2>시험 모드</h2>
+      <p id="test-hint"></p>
+      <div id="test-list"></div>
+      <button id="test-back">돌아가기</button>
+    </section>
+
+    <section id="scene" class="screen">
+      <header id="scene-bar">
+        <div id="place"></div>
+        <div id="scene-tools">
+          <button id="btn-log" class="tool" aria-label="지나간 대사 보기">로그</button>
+          <button id="btn-auto" class="tool" aria-pressed="false" aria-label="자동 진행">자동</button>
+          <button id="btn-skip" class="tool" aria-pressed="false" aria-label="읽은 대사 빨리 넘기기">빨리</button>
+          <button id="scene-menu" class="gear" aria-label="메뉴">≡</button>
+        </div>
+      </header>
+      <canvas id="portrait" width="540" height="720"></canvas>
+      <div id="nametag" hidden></div>
+      <div id="board" hidden></div>
+      <div id="talk">
+        <div id="chatlog"></div>
+        <div id="choices"></div>
+        <div id="tap-hint" hidden>화면을 터치하면 다음 메시지가 와요</div>
+        <div id="dialog" class="win">
+          <div id="speaker"></div>
+          <div id="text"></div>
+          <div id="next-mark">▼</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="screen">
+      <canvas id="map-canvas"></canvas>
+      <div id="map-name" class="tag"></div>
+      <button id="map-menu" class="gear" aria-label="메뉴">≡</button>
+      <div id="map-tip" class="win" hidden>가고 싶은 곳을 터치하면 걸어가요.<br>사람이나 건물을 터치하면 말을 걸어요.</div>
+    </section>
+
+    <section id="battle" class="screen">
+      <div id="enemies"></div>
+      <div id="blog" class="win"></div>
+      <div id="coop">협동 게이지 <div class="bar"><i></i></div></div>
+      <div id="party"></div>
+      <div id="bmenu"></div>
+    </section>
+
+    <section id="vs" class="screen">
+      <canvas id="vs-canvas"></canvas>
+      <div id="vs-hud">
+        <div class="vs-row"><span id="vs-level">Lv 1</span><span id="vs-time">3:00</span><span id="vs-kills">처치 0</span></div>
+        <div class="vs-bar hp"><i id="vs-hp"></i></div>
+        <div class="vs-bar xp"><i id="vs-xp"></i></div>
+        <div id="vs-gim" hidden></div>
+        <div id="vs-boss" hidden><b></b><div class="vs-bar"><i></i></div></div>
+      </div>
+      <button id="vs-pause">Ⅱ</button>
+      <div id="vs-cutin" class="win"></div>
+      <div id="vs-bossin" hidden><small></small><b></b></div>
+      <div id="vs-rampage" hidden><canvas width="300" height="400"></canvas><p></p></div>
+      <div id="vs-chain"></div>
+      <div id="vs-overlay" hidden><h2 id="vs-ov-title"></h2><div id="vs-ov-body" class="win list"></div></div>
+    </section>
+
+    <section id="ending" class="screen">
+      <div class="win">
+        <h2 id="ending-title"></h2>
+        <p id="ending-stat" hidden></p>
+        <p id="ending-body"></p>
+        <div id="ending-sum" hidden></div>
+      </div>
+      <button id="btn-card">카드로 공유</button>
+      <button id="btn-title">처음으로</button>
+    </section>
+
+    <div id="endcard" class="layer" hidden>
+      <div class="panel win">
+        <img alt="엔딩 카드">
+        <small>그림을 꾹 누르면 바로 저장돼요</small>
+        <div class="list">
+          <button id="endcard-share" class="primary">공유하기</button>
+          <button id="endcard-save">그림 저장</button>
+          <button id="endcard-close">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu" class="layer" hidden>
+      <div class="panel win">
+        <h2>메뉴</h2>
+        <p id="menu-hearts" class="hearts" hidden></p>
+        <p id="menu-gold" hidden></p>
+        <div class="list">
+          <button id="menu-close" class="primary">계속하기</button>
+          <button id="menu-relations">관계도</button>
+          <button id="menu-settings">환경설정</button>
+          <button id="menu-load">불러오기</button>
+          <button id="menu-title">타이틀로</button>
+        </div>
+        <small>진행은 자동으로 저장돼요</small>
+      </div>
+    </div>
+
+    <div id="relations" class="layer" hidden>
+      <div class="panel win">
+        <h2>관계도</h2>
+        <div id="rel-map"></div>
+        <p id="rel-hint"></p>
+        <div id="rel-tips"></div>
+        <button id="relations-close">닫기</button>
+      </div>
+    </div>
+
+    <div id="backlog" class="layer" hidden>
+      <div class="panel win">
+        <h2>지나간 대사</h2>
+        <div id="backlog-list"></div>
+        <button id="backlog-close">닫기</button>
+      </div>
+    </div>
+
+    <div id="shop" class="layer" hidden>
+      <div class="panel win">
+        <h2 id="shop-title"></h2>
+        <p id="shop-hint"></p>
+        <p id="shop-gold"></p>
+        <div id="shop-list"></div>
+        <button id="shop-close">나가기</button>
+      </div>
+    </div>
+
+    <div id="settings" class="layer" hidden>
+      <div class="panel win">
+        <h2>환경설정</h2>
+        <div id="settings-list"></div>
+        <button id="settings-reset" class="sub">기본값으로</button>
+        <button id="settings-close">닫기</button>
+      </div>
+    </div>
+
+    <div id="dice" class="layer" hidden>
+      <div class="panel win">
+        <h2 id="dice-title"></h2>
+        <div id="dice-dc"><small>난이도</small><b id="dice-need"></b></div>
+        <div id="dice-stage">
+          <i id="dice-rays"></i>
+          <i id="dice-ring"></i>
+          <div id="dice-hop">
+            <div id="dice-face">
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <polygon class="d-out" points="50,4 90,27 90,73 50,96 10,73 10,27" />
+                <polygon class="d-in" points="50,22 78,70 22,70" />
+                <path class="d-edge" d="M50,4 L50,22 M90,27 L78,70 M10,27 L22,70 M50,22 L10,27 M50,22 L90,27 M22,70 L10,73 M22,70 L50,96 M78,70 L50,96 M78,70 L90,73" />
+              </svg>
+              <b id="dice-num"></b>
+            </div>
+          </div>
+          <i id="dice-shadow"></i>
+          <div id="dice-sparks"></div>
+        </div>
+        <small id="dice-hint">눌러서 굴리기</small>
+        <p id="dice-result"></p>
+      </div>
+    </div>
+
+    <!-- 단톡방 프사를 누르면 뜨는 가짜 카톡 프로필 -->
+    <div id="profile" hidden>
+      <button id="pf-close" aria-label="닫기">✕</button>
+      <div id="pf-main">
+        <canvas id="pf-face" width="240" height="240"></canvas>
+        <b id="pf-name"></b>
+        <p id="pf-status"></p>
+        <small id="pf-note" hidden>지금은 연결할 수 없어요</small>
+      </div>
+      <nav id="pf-actions">
+        <button><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C7 4 3 7.1 3 11c0 2.4 1.5 4.5 3.9 5.8L6 20l3.6-2.3c.8.2 1.6.3 2.4.3 5 0 9-3.1 9-7s-4-7-9-7z"/></svg>1:1 채팅</button>
+        <button><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>보이스톡</button>
+        <button><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 8v8H4V8h11m1-2H3c-.6 0-1 .4-1 1v10c0 .6.4 1 1 1h13c.6 0 1-.4 1-1v-3.5l4 4v-11l-4 4V7c0-.6-.4-1-1-1z"/></svg>페이스톡</button>
+      </nav>
+    </div>
+    <div id="toast" class="win"></div>
+    <!-- 세상이 바뀔 때 덮는 막 (src/ui/warp.js) -->
+    <div id="warp" hidden><i class="swirl"></i><i class="lines"></i><i class="glow"></i></div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
