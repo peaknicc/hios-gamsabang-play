@@ -12,11 +12,11 @@
   <link rel="icon" type="image/png" href="icons/icon_192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <!-- black-translucent(시계 줄 밑까지 그리기)는 아이폰 홈 화면 앱에서 아래가 시계 줄만큼 안 그려지는 버그 → black (6차 ⑪) -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- 시계 줄 밑까지 그리기. iOS 26 은 이 값과 상관없이 늘 이렇게 그림 → 높이는 main.js 가 맞춤 (6차 ⑪) -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="히오스감사방">
   <title>히오스감사방</title>
-  <link rel="stylesheet" href="main.css?v=7984ca99">
+  <link rel="stylesheet" href="main.css?v=6fadcf54">
 </head>
 <body>
   <div id="app">
@@ -233,6 +233,6 @@
     <!-- 세상이 바뀔 때 덮는 막 (src/ui/warp.js) -->
     <div id="warp" hidden><i class="swirl"></i><i class="lines"></i><i class="glow"></i></div>
   </div>
-  <script type="module" src="main.js?v=bf23f43a"></script>
+  <script type="module" src="main.js?v=c4f8f026"></script>
 </body>
 </html>
