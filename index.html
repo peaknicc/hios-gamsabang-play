@@ -16,7 +16,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="히오스감사방">
   <title>히오스감사방</title>
-  <link rel="stylesheet" href="main.css?v=250c38c5">
+  <link rel="stylesheet" href="main.css?v=f4913750">
 </head>
 <body>
   <div id="app">
@@ -29,6 +29,7 @@
         <button id="btn-load">불러오기</button>
         <button id="btn-vs">뱀서 시험판</button>
         <button id="btn-records">기록</button>
+        <button id="btn-quiz">누가 한 말이게?</button>
         <button id="btn-test">시험 모드</button>
         <button id="btn-settings">환경설정</button>
       </nav>
@@ -40,6 +41,21 @@
       <p id="slots-hint"></p>
       <div id="slot-list"></div>
       <button id="slots-back">돌아가기</button>
+    </section>
+
+    <section id="quiz" class="screen page">
+      <h2 id="quiz-title"></h2>
+      <p id="quiz-step"></p>
+      <div id="quiz-line"></div>
+      <p id="quiz-say" aria-live="polite"></p>
+      <div id="quiz-picks"></div>
+      <div id="quiz-end" hidden>
+        <b id="quiz-rank"></b>
+        <span id="quiz-score"></span>
+        <button id="quiz-card" class="primary">카드 만들기</button>
+        <button id="quiz-again">다시 하기</button>
+      </div>
+      <button id="quiz-back">돌아가기</button>
     </section>
 
     <section id="records" class="screen page">
@@ -236,6 +252,6 @@
     <!-- 세상이 바뀔 때 덮는 막 (src/ui/warp.js) -->
     <div id="warp" hidden><i class="swirl"></i><i class="lines"></i><i class="glow"></i></div>
   </div>
-  <script type="module" src="main.js?v=71c64ee1"></script>
+  <script type="module" src="main.js?v=fe71f87a"></script>
 </body>
 </html>
